@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>日本語学習 | Nihongo Study</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: #f7f7f7;
+    }
+
+    /* ======= Password Screen ======= */
+    #lock {
+      max-width: 380px;
+      margin: 100px auto;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    #lock input {
+      width: 100%;
+      font-size: 17px;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    #lock button {
+      width: 100%;
+      margin-top: 16px;
+      padding: 12px;
+      font-size: 17px;
+      background: #007aff;
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      cursor: pointer;
+    }
+    #lock button:hover {
+      background: #0066d6;
+    }
+    #msg {
+      color: #d00;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    /* ======= Main Content ======= */
+    #app {
+      display: none;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 16px;
+      text-align: center;
+      color: #333;
+    }
+
+    .section {
+      background: #ffffff;
+      padding: 18px;
+      border-radius: 12px;
+      margin-bottom: 14px;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.06);
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-content {
+      display: none;
+      margin-top: 10px;
+      line-height: 1.7;
+      color: #444;
+      font-size: 15px;
+    }
+
+    .arrow {
+      transition: 0.2s;
+    }
+    .arrow.open {
+      transform: rotate(90deg);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Password Screen -->
+  <div id="lock">
+    <h2>日本語学習</h2>
+    <p>パスワードを入力してください</p>
+    <input type="password" id="passwordInput" placeholder="Password">
+    <button id="btn">ログイン</button>
+    <p id="msg"></p>
+  </div>
+
+  <!-- Main Content -->
+  <div id="app">
+    <h1>日本語学習サイト</h1>
+
+    <!-- 五十音 -->
+    <div class="section">
+      <div class="section-title">
+        五十音（ごじゅうおん）
+        <span class="arrow">▶</span>
+      </div>
+      <div class="section-content">
+        <p>あ いうえお<br>
+           か きくけこ<br>
+           さ しすせそ<br>
+           た ちつてと<br>
+           な にぬねの<br>
+           は ひふへほ<br>
+           ま みむめも<br>
+           や   ゆ   よ<br>
+           ら りるれろ<br>
+           わ        を<br>
+           ん
+        </p>
+      </div>
+    </div>
+
+    <!-- 日常礼貌用语100句 -->
+    <div class="section">
+      <div class="section-title">
+        日常礼貌用語100句
+        <span class="arrow">▶</span>
+      </div>
+      <div class="section-content">
+        <p>こんにちは — 你好<br>
+           ありがとうございます — 非常感谢<br>
+           すみません — 不好意思 / 打扰了<br>
+           お願いします — 拜托了<br>
+           いらっしゃいませ — 欢迎光临（便利店/超市）<br>
+           お会計お願いします — 麻烦结账<br>
+           財布忘れました — 我忘带钱包了<br>
+           …（你可以继续增加）
+        </p>
+      </div>
+    </div>
+
+    <!-- 常用语法 -->
+    <div class="section">
+      <div class="section-title">
+        常用固定语法
+        <span class="arrow">▶</span>
+      </div>
+      <div class="section-content">
+        <p>
+          〜なので — 因为…所以…<br>
+          〜けど／ですが — 但是…<br>
+          〜のに — 明明…却…<br>
+          〜ても — 即使…也…<br>
+          〜かどうか — 是否…<br>
+          以前（いぜん）— 以前<br>
+          〜の前に — 之前<br>
+          …（你可以继续扩写）
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /* ===== Password Logic ===== */
+    const PASSWORD = "nihongo2025";
+
+    const input = document.getElementById("passwordInput");
+    const button = document.getElementById("btn");
+    const msg = document.getElementById("msg");
+    const lock = document.getElementById("lock");
+    const app = document.getElementById("app");
+
+    function checkPassword() {
+      if (input.value === PASSWORD) {
+        lock.style.display = "none";
+        app.style.display = "block";
+        window.scrollTo(0, 0);
+      } else {
+        msg.textContent = "パスワードが違います。";
+        input.value = "";
+      }
+    }
+
+    button.addEventListener("click", checkPassword);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") checkPassword();
+    });
+
+    /* ===== Section Toggle ===== */
+    const titles = document.querySelectorAll(".section-title");
+    titles.forEach(title => {
+      title.addEventListener("click", () => {
+        const content = title.nextElementSibling;
+        const arrow = title.querySelector(".arrow");
+        content.style.display = content.style.display === "block" ? "none" : "block";
+        arrow.classList.toggle("open");
+      });
+    });
+  </script>
+
+</body>
+</html>
