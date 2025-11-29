@@ -1,221 +1,413 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>日本語学習 | Nihongo Study</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Torres 日本語ノート</title>
+<style>
+  :root {
+    --bg: #f5f5f7;
+    --card-bg: #ffffff;
+    --main: #111827;
+    --sub: #6b7280;
+    --border: #e5e7eb;
+  }
 
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: #f7f7f7;
-    }
+  * { box-sizing: border-box; }
 
-    /* ======= Password Screen ======= */
-    #lock {
-      max-width: 380px;
-      margin: 100px auto;
-      background: #ffffff;
-      border-radius: 14px;
-      padding: 28px;
-      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
-      text-align: center;
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: #111827;
+  }
+
+  /* 顶部栏 */
+  header {
+    padding: 12px 16px 10px;
+    background: var(--main);
+    color: #fff;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  header p {
+    margin: 4px 0 0;
+    font-size: 11px;
+    opacity: 0.8;
+  }
+
+  /* 标签导航（手机顶部 tab） */
+  .tab-bar {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .tab-button {
+    flex: 1;
+    text-align: center;
+    padding: 10px 4px;
+    font-size: 13px;
+    border: none;
+    background: transparent;
+    outline: none;
+    cursor: pointer;
+    color: var(--sub);
+  }
+  .tab-button span {
+    display: block;
+    font-size: 11px;
+    margin-top: 2px;
+  }
+  .tab-button.active {
+    color: var(--main);
+    font-weight: 600;
+    border-bottom: 2px solid var(--main);
+  }
+
+  /* 内容区域 */
+  .main {
+    padding: 14px 12px 20px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  h3 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    border-left: 3px solid var(--main);
+    padding-left: 8px;
+  }
+  h4 {
+    margin: 12px 0 6px;
+    font-size: 14px;
+    color: #374151;
+  }
+
+  .section-desc {
+    font-size: 12px;
+    color: var(--sub);
+    margin-bottom: 10px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.06);
+  }
+
+  .jp {
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .romaji {
+    font-size: 11px;
+    color: var(--sub);
+    margin-top: 2px;
+  }
+  .zh {
+    font-size: 13px;
+    margin-top: 5px;
+  }
+  .scene {
+    font-size: 11px;
+    color: var(--sub);
+    margin-top: 4px;
+  }
+
+  /* 五十音表小网格 */
+  .kana-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-top: 8px;
+    margin-bottom: 4px;
+  }
+  .kana-cell {
+    background: #fff;
+    border-radius: 10px;
+    padding: 6px 4px;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .kana-main {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .kana-sub {
+    font-size: 11px;
+    color: var(--sub);
+    margin-top: 2px;
+  }
+  .kana-romaji {
+    font-size: 10px;
+    color: #9ca3af;
+    margin-top: 1px;
+  }
+
+  /* 页面隐藏显示 */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  @media (min-width: 768px) {
+    header {
+      padding: 14px 24px 12px;
     }
-    #lock input {
-      width: 100%;
-      font-size: 17px;
-      padding: 12px;
-      margin-top: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
+    .main {
+      padding: 18px 16px 28px;
     }
-    #lock button {
-      width: 100%;
-      margin-top: 16px;
-      padding: 12px;
-      font-size: 17px;
-      background: #007aff;
-      border: none;
-      border-radius: 10px;
-      color: #fff;
-      cursor: pointer;
-    }
-    #lock button:hover {
-      background: #0066d6;
-    }
-    #msg {
-      color: #d00;
-      margin-top: 10px;
+    .tab-button {
+      padding: 12px 4px;
       font-size: 14px;
     }
-
-    /* ======= Main Content ======= */
-    #app {
-      display: none;
-      padding: 20px;
-      max-width: 600px;
-      margin: auto;
-    }
-
-    h1 {
-      font-size: 24px;
-      margin-bottom: 16px;
-      text-align: center;
-      color: #333;
-    }
-
-    .section {
-      background: #ffffff;
-      padding: 18px;
-      border-radius: 12px;
-      margin-bottom: 14px;
-      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.06);
-    }
-
-    .section-title {
-      font-size: 18px;
-      font-weight: bold;
-      margin: 0;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .section-content {
-      display: none;
-      margin-top: 10px;
-      line-height: 1.7;
-      color: #444;
-      font-size: 15px;
-    }
-
-    .arrow {
-      transition: 0.2s;
-    }
-    .arrow.open {
-      transform: rotate(90deg);
-    }
-  </style>
+  }
+</style>
 </head>
-
 <body>
 
-  <!-- Password Screen -->
-  <div id="lock">
-    <h2>日本語学習</h2>
-    <p>パスワードを入力してください</p>
-    <input type="password" id="passwordInput" placeholder="Password">
-    <button id="btn">ログイン</button>
-    <p id="msg"></p>
+<header>
+  <h1>Torres 日本語ノート</h1>
+  <p>手机专用 · 自分用 · いつでも復習</p>
+</header>
+
+<!-- 顶部标签导航 -->
+<div class="tab-bar">
+  <button class="tab-button active" onclick="showPage('hiragana', this)">
+    五十音
+    <span>假名＋罗马音</span>
+  </button>
+  <button class="tab-button" onclick="showPage('phrases', this)">
+    礼貌用语
+    <span>100 句常用句</span>
+  </button>
+  <button class="tab-button" onclick="showPage('grammar', this)">
+    语法
+    <span>因为/但是/即使</span>
+  </button>
+</div>
+
+<div class="main">
+  <!-- Page 1: 五十音 -->
+  <div id="hiragana" class="page active">
+    <h3>五十音（平假名・片假名）</h3>
+    <div class="section-desc">
+      每天过一遍五十音，不求快，求熟。先掌握あ行〜か行，慢慢扩展。
+    </div>
+
+    <!-- 示例：あ行 -->
+    <h4>あ行（あ・い・う・え・お）</h4>
+    <div class="kana-grid">
+      <div class="kana-cell">
+        <div class="kana-main">あ / ア</div>
+        <div class="kana-sub">a</div>
+        <div class="kana-romaji">例：ありがとう（谢谢）</div>
+      </div>
+      <div class="kana-cell">
+        <div class="kana-main">い / イ</div>
+        <div class="kana-sub">i</div>
+        <div class="kana-romaji">例：いえ（家）</div>
+      </div>
+      <div class="kana-cell">
+        <div class="kana-main">う / ウ</div>
+        <div class="kana-sub">u</div>
+        <div class="kana-romaji">例：うみ（海）</div>
+      </div>
+      <div class="kana-cell">
+        <div class="kana-main">え / エ</div>
+        <div class="kana-sub">e</div>
+        <div class="kana-romaji">例：えき（车站）</div>
+      </div>
+      <div class="kana-cell">
+        <div class="kana-main">お / オ</div>
+        <div class="kana-sub">o</div>
+        <div class="kana-romaji">例：おかね（钱）</div>
+      </div>
+    </div>
+
+    <!-- 示例：か行 -->
+    <h4>か行（か・き・く・け・こ）</h4>
+    <div class="kana-grid">
+      <div class="kana-cell">
+        <div class="kana-main">か / カ</div>
+        <div class="kana-sub">ka</div>
+        <div class="kana-romaji">例：かさ（伞）</div>
+      </div>
+      <div class="kana-cell">
+        <div class="kana-main">き / キ</div>
+        <div class="kana-sub">ki</div>
+        <div class="kana-romaji">例：きっぷ（票）</div>
+      </div>
+      <div class="kana-cell">
+        <div class="kana-main">く / ク</div>
+        <div class="kana-sub">ku</div>
+        <div class="kana-romaji">例：くるま（车）</div>
+      </div>
+      <div class="kana-cell">
+        <div class="kana-main">け / ケ</div>
+        <div class="kana-sub">ke</div>
+        <div class="kana-romaji">例：けさ（今天早上）</div>
+      </div>
+      <div class="kana-cell">
+        <div class="kana-main">こ / コ</div>
+        <div class="kana-sub">ko</div>
+        <div class="kana-romaji">例：こども（孩子）</div>
+      </div>
+    </div>
+
+    <!-- 以后你可以按行继续往下：さ行、た行…… -->
   </div>
 
-  <!-- Main Content -->
-  <div id="app">
-    <h1>日本語学習サイト</h1>
+  <!-- Page 2: 日常礼貌用语 -->
+  <div id="phrases" class="page">
+    <h3>日常礼貌用语 100 句</h3>
+    <div class="section-desc">
+      按场景背句子：先学会“能开口”，再慢慢管语法。
+    </div>
 
-    <!-- 五十音 -->
-    <div class="section">
-      <div class="section-title">
-        五十音（ごじゅうおん）
-        <span class="arrow">▶</span>
-      </div>
-      <div class="section-content">
-        <p>あ いうえお<br>
-           か きくけこ<br>
-           さ しすせそ<br>
-           た ちつてと<br>
-           な にぬねの<br>
-           は ひふへほ<br>
-           ま みむめも<br>
-           や   ゆ   よ<br>
-           ら りるれろ<br>
-           わ        を<br>
-           ん
-        </p>
+    <h4>【日常打招呼 · 邻居】</h4>
+    <div class="card">
+      <div class="jp">いつもありがとうございます。</div>
+      <div class="romaji">itsumo arigatou gozaimasu</div>
+      <div class="zh">一直以来谢谢您。</div>
+      <div class="scene">场景：邻居、便利店店员、帮过你忙的人。</div>
+    </div>
+
+    <div class="card">
+      <div class="jp">息子がまだ4歳なので、少しうるさかったらすみません。</div>
+      <div class="romaji">musuko ga mada yon-sai nanode, sukoshi urusakattara sumimasen</div>
+      <div class="zh">我儿子才4岁，如果有点吵的话，不好意思。</div>
+      <div class="scene">场景：和邻居解释小孩吵闹。</div>
+    </div>
+
+    <div class="card">
+      <div class="jp">ご迷惑をおかけしたら、すみません。</div>
+      <div class="romaji">gomeiwaku o okake shitara, sumimasen</div>
+      <div class="zh">如果给您添麻烦了，真抱歉。</div>
+    </div>
+
+    <h4>【便利店】</h4>
+    <div class="card">
+      <div class="jp">袋いりません。</div>
+      <div class="romaji">fukuro irimasen</div>
+      <div class="zh">不需要袋子。</div>
+    </div>
+
+    <div class="card">
+      <div class="jp">そのままで大丈夫です。</div>
+      <div class="romaji">sono mama de daijoubu desu</div>
+      <div class="zh">这样就可以（不用再处理）。</div>
+      <div class="scene">场景：是否要加热、装袋时都能用。</div>
+    </div>
+
+    <h4>【区役所】</h4>
+    <div class="card">
+      <div class="jp">転入の手続きをお願いしたいのですが。</div>
+      <div class="romaji">tennyuu no tetsuzuki o onegaishitai no desu ga</div>
+      <div class="zh">我想办理迁入手续。</div>
+    </div>
+
+    <div class="card">
+      <div class="jp">日本語があまり上手ではないので、ゆっくり話していただけますか。</div>
+      <div class="romaji">nihongo ga amari jouzu de wa nai node, yukkuri hanashite itadakemasu ka</div>
+      <div class="zh">我日语不太好，可以说慢一点吗？</div>
+    </div>
+
+    <h4>【银行】</h4>
+    <div class="card">
+      <div class="jp">口座を作りたいです。</div>
+      <div class="romaji">kouza o tsukuritai desu</div>
+      <div class="zh">我想开一个银行账户。</div>
+    </div>
+
+    <div class="card">
+      <div class="jp">法人名義の口座は作れますか。</div>
+      <div class="romaji">houjin meigi no kouza wa tsukuremasu ka</div>
+      <div class="zh">可以开法人名义的账户吗？</div>
+    </div>
+
+    <!-- 以后你可以在这里一直追加句子，直到 100 句 -->
+  </div>
+
+  <!-- Page 3: 语法 -->
+  <div id="grammar" class="page">
+    <h3>常用固定语法</h3>
+    <div class="section-desc">
+      只记录自己常遇到、常用的语法，用自己的话来理解。
+    </div>
+
+    <div class="card">
+      <div class="jp">原因：〜ので / 〜から（因为……）</div>
+      <div class="zh">
+        「ので」：更委婉、更有礼貌。<br>
+        「から」：普通口语最常用。<br><br>
+        例：<br>
+        息子が小さいので、外出は少し大変です。<br>
+        因为儿子还小，出门有点麻烦。<br><br>
+        時間がないから、今日は無理です。<br>
+        因为没有时间，今天不行。
       </div>
     </div>
 
-    <!-- 日常礼貌用语100句 -->
-    <div class="section">
-      <div class="section-title">
-        日常礼貌用語100句
-        <span class="arrow">▶</span>
-      </div>
-      <div class="section-content">
-        <p>こんにちは — 你好<br>
-           ありがとうございます — 非常感谢<br>
-           すみません — 不好意思 / 打扰了<br>
-           お願いします — 拜托了<br>
-           いらっしゃいませ — 欢迎光临（便利店/超市）<br>
-           お会計お願いします — 麻烦结账<br>
-           財布忘れました — 我忘带钱包了<br>
-           …（你可以继续增加）
-        </p>
+    <div class="card">
+      <div class="jp">转折：でも / けど / しかし（但是）</div>
+      <div class="zh">
+        でも：最常用，放在句首。<br>
+        けど：放句中或句尾，更口语。<br>
+        しかし：比较正式，新闻、书面。<br><br>
+        例：行きたいです。でも、今日は忙しいです。<br>
+        想去，但是今天很忙。<br><br>
+        行きたいけど、今日は忙しいです。<br>
+        想去，但今天忙。
       </div>
     </div>
 
-    <!-- 常用语法 -->
-    <div class="section">
-      <div class="section-title">
-        常用固定语法
-        <span class="arrow">▶</span>
+    <div class="card">
+      <div class="jp">让步：〜ても（即使……也……）</div>
+      <div class="zh">
+        例：雨が降っても、ゴミを出さないといけません。<br>
+        即使下雨，也必须去倒垃圾。<br><br>
+        子どもがうるさくても、大丈夫ですよ。<br>
+        即使孩子有点吵，也没关系哦。
       </div>
-      <div class="section-content">
-        <p>
-          〜なので — 因为…所以…<br>
-          〜けど／ですが — 但是…<br>
-          〜のに — 明明…却…<br>
-          〜ても — 即使…也…<br>
-          〜かどうか — 是否…<br>
-          以前（いぜん）— 以前<br>
-          〜の前に — 之前<br>
-          …（你可以继续扩写）
-        </p>
+    </div>
+
+    <div class="card">
+      <div class="jp">之前：前に / この前 / 以前</div>
+      <div class="zh">
+        前に：动作发生前。<br>
+        この前：不久之前（前阵子）。<br>
+        以前：更早以前。<br><br>
+        日本に来る前に、少し日本語を勉強しました。<br>
+        来日本之前，学了一点日语。<br><br>
+        この前、区役所に行きました。<br>
+        前几天去了一次区役所。
       </div>
     </div>
 
   </div>
+</div>
 
-  <script>
-    /* ===== Password Logic ===== */
-    const PASSWORD = "nihongo2025";
+<script>
+  function showPage(id, btn) {
+    // 切换页面
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
 
-    const input = document.getElementById("passwordInput");
-    const button = document.getElementById("btn");
-    const msg = document.getElementById("msg");
-    const lock = document.getElementById("lock");
-    const app = document.getElementById("app");
+    // 切换 tab 高亮
+    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
 
-    function checkPassword() {
-      if (input.value === PASSWORD) {
-        lock.style.display = "none";
-        app.style.display = "block";
-        window.scrollTo(0, 0);
-      } else {
-        msg.textContent = "パスワードが違います。";
-        input.value = "";
-      }
-    }
-
-    button.addEventListener("click", checkPassword);
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") checkPassword();
-    });
-
-    /* ===== Section Toggle ===== */
-    const titles = document.querySelectorAll(".section-title");
-    titles.forEach(title => {
-      title.addEventListener("click", () => {
-        const content = title.nextElementSibling;
-        const arrow = title.querySelector(".arrow");
-        content.style.display = content.style.display === "block" ? "none" : "block";
-        arrow.classList.toggle("open");
-      });
-    });
-  </script>
+    // 切换后滚回页面顶部一点点，方便手机阅读
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
 
 </body>
 </html>
