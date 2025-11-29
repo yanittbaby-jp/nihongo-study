@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Torres 日本語ノート</title>
+
 <style>
   :root {
     --bg: #f5f5f7;
@@ -17,29 +18,26 @@
 
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: var(--bg);
-    color: #111827;
+    font-family:
+      "Hiragino Sans",
+      "Hiragino Kaku Gothic ProN",
+      "Yu Gothic UI",
+      "Yu Gothic",
+      "Noto Sans JP",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
   }
 
-  /* 顶部栏 */
   header {
-    padding: 12px 16px 10px;
+    padding: 12px 16px;
     background: var(--main);
-    color: #fff;
+    color: white;
   }
-  header h1 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-  }
-  header p {
-    margin: 4px 0 0;
-    font-size: 11px;
-    opacity: 0.8;
-  }
+  header h1 { margin: 0; font-size: 18px; font-weight: 600; }
 
-  /* 标签导航（手机顶部 tab） */
+  /* TAB */
   .tab-bar {
     display: flex;
     border-bottom: 1px solid var(--border);
@@ -50,364 +48,1198 @@
   }
   .tab-button {
     flex: 1;
-    text-align: center;
-    padding: 10px 4px;
-    font-size: 13px;
+    padding: 12px 0;
+    font-size: 14px;
+    background: none;
     border: none;
-    background: transparent;
-    outline: none;
-    cursor: pointer;
     color: var(--sub);
-  }
-  .tab-button span {
-    display: block;
-    font-size: 11px;
-    margin-top: 2px;
   }
   .tab-button.active {
     color: var(--main);
-    font-weight: 600;
     border-bottom: 2px solid var(--main);
+    font-weight: 600;
   }
 
-  /* 内容区域 */
   .main {
-    padding: 14px 12px 20px;
-    max-width: 720px;
+    padding: 16px;
+    max-width: 760px;
     margin: 0 auto;
   }
 
-  h3 {
-    margin: 0 0 10px;
-    font-size: 16px;
-    border-left: 3px solid var(--main);
-    padding-left: 8px;
-  }
-  h4 {
-    margin: 12px 0 6px;
-    font-size: 14px;
-    color: #374151;
-  }
-
-  .section-desc {
-    font-size: 12px;
-    color: var(--sub);
-    margin-bottom: 10px;
-  }
-
-  .card {
-    background: var(--card-bg);
-    border-radius: 12px;
-    padding: 10px 12px;
-    margin-bottom: 8px;
-    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.06);
-  }
-
-  .jp {
-    font-size: 17px;
-    font-weight: 600;
-  }
-  .romaji {
-    font-size: 11px;
-    color: var(--sub);
-    margin-top: 2px;
-  }
-  .zh {
-    font-size: 13px;
-    margin-top: 5px;
-  }
-  .scene {
-    font-size: 11px;
-    color: var(--sub);
-    margin-top: 4px;
-  }
-
-  /* 五十音表小网格 */
-  .kana-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 6px;
-    margin-top: 8px;
-    margin-bottom: 4px;
-  }
-  .kana-cell {
-    background: #fff;
-    border-radius: 10px;
-    padding: 6px 4px;
-    text-align: center;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  }
-  .kana-main {
-    font-size: 16px;
-    font-weight: 600;
-  }
-  .kana-sub {
-    font-size: 11px;
-    color: var(--sub);
-    margin-top: 2px;
-  }
-  .kana-romaji {
-    font-size: 10px;
-    color: #9ca3af;
-    margin-top: 1px;
-  }
-
-  /* 页面隐藏显示 */
   .page { display: none; }
   .page.active { display: block; }
 
-  @media (min-width: 768px) {
-    header {
-      padding: 14px 24px 12px;
-    }
-    .main {
-      padding: 18px 16px 28px;
-    }
-    .tab-button {
-      padding: 12px 4px;
-      font-size: 14px;
-    }
+  h3 {
+    margin-top: 0;
+    border-left: 4px solid var(--main);
+    padding-left: 8px;
+    font-size: 17px;
   }
+
+  h4 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 20px 0 10px;
+    color: #111;
+  }
+
+  /* 假名字块 */
+  .kana-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(62px, 1fr));
+    gap: 6px;
+  }
+  .kana-cell {
+    background: white;
+    border-radius: 10px;
+    padding: 8px 4px;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    cursor: pointer;
+  }
+  .kana-cell:active {
+    background: #e6f0ff;
+    transform: scale(.97);
+  }
+  .kana-main { font-size: 16px; font-weight: 600; }
+  .kana-sub { font-size: 11px; color: var(--sub); }
+  .kana-romaji { font-size: 10px; color: #9ca3af; }
+
+  /* 卡片 */
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .jp { font-size: 17px; font-weight: 600; }
+  .romaji { font-size: 12px; color: var(--sub); margin-top:2px; }
+  .zh { font-size: 13px; margin-top:6px; }
+
+  /* 测验模式 */
+  .quiz-box {
+    background: white;
+    padding: 22px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    margin-top: 20px;
+  }
+  .quiz-kana {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .quiz-btn {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    border: none;
+    background: var(--main);
+    color: white;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+  .quiz-btn.sub {
+    background: #374151;
+  }
+  .quiz-answer {
+    font-size: 20px;
+    margin-top: 12px;
+    color: #111;
+    font-weight: 600;
+  }
+  /* 只让 礼貌用语 + 常用单词 里的 h4 可折叠显示箭头 */
+  #phrases h4,
+  #words h4 {
+    cursor: pointer;
+    position: relative;
+    padding-right: 18px; /* 给右边留点空间放箭头 */
+  }
+
+  #phrases h4::after,
+  #words h4::after {
+    content: '▼';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: var(--sub);
+  }
+
+  #phrases h4.collapsed::after,
+  #words h4.collapsed::after {
+    content: '▶';
+  }
+
 </style>
 </head>
 <body>
 
 <header>
   <h1>Torres 日本語ノート</h1>
-  <p>手机专用 · 自分用 · いつでも復習</p>
 </header>
 
-<!-- 顶部标签导航 -->
 <div class="tab-bar">
-  <button class="tab-button active" onclick="showPage('hiragana', this)">
-    五十音
-    <span>假名＋罗马音</span>
-  </button>
-  <button class="tab-button" onclick="showPage('phrases', this)">
-    礼貌用语
-    <span>100 句常用句</span>
-  </button>
-  <button class="tab-button" onclick="showPage('grammar', this)">
-    语法
-    <span>因为/但是/即使</span>
-  </button>
+  <button class="tab-button active" onclick="showPage('hiragana', this)">五十音</button>
+  <button class="tab-button" onclick="showPage('phrases', this)">礼貌用语</button>
+  <button class="tab-button" onclick="showPage('words', this)">常用单词</button>
+  <button class="tab-button" onclick="showPage('grammar', this)">语法</button>
+  <button class="tab-button" onclick="showPage('quiz', this)">测验模式</button>
 </div>
 
 <div class="main">
-  <!-- Page 1: 五十音 -->
+
+  <!-- 五十音 -->
   <div id="hiragana" class="page active">
-    <h3>五十音（平假名・片假名）</h3>
-    <div class="section-desc">
-      每天过一遍五十音，不求快，求熟。先掌握あ行〜か行，慢慢扩展。
-    </div>
-
-    <!-- 示例：あ行 -->
-    <h4>あ行（あ・い・う・え・お）</h4>
-    <div class="kana-grid">
-      <div class="kana-cell">
-        <div class="kana-main">あ / ア</div>
-        <div class="kana-sub">a</div>
-        <div class="kana-romaji">例：ありがとう（谢谢）</div>
-      </div>
-      <div class="kana-cell">
-        <div class="kana-main">い / イ</div>
-        <div class="kana-sub">i</div>
-        <div class="kana-romaji">例：いえ（家）</div>
-      </div>
-      <div class="kana-cell">
-        <div class="kana-main">う / ウ</div>
-        <div class="kana-sub">u</div>
-        <div class="kana-romaji">例：うみ（海）</div>
-      </div>
-      <div class="kana-cell">
-        <div class="kana-main">え / エ</div>
-        <div class="kana-sub">e</div>
-        <div class="kana-romaji">例：えき（车站）</div>
-      </div>
-      <div class="kana-cell">
-        <div class="kana-main">お / オ</div>
-        <div class="kana-sub">o</div>
-        <div class="kana-romaji">例：おかね（钱）</div>
-      </div>
-    </div>
-
-    <!-- 示例：か行 -->
-    <h4>か行（か・き・く・け・こ）</h4>
-    <div class="kana-grid">
-      <div class="kana-cell">
-        <div class="kana-main">か / カ</div>
-        <div class="kana-sub">ka</div>
-        <div class="kana-romaji">例：かさ（伞）</div>
-      </div>
-      <div class="kana-cell">
-        <div class="kana-main">き / キ</div>
-        <div class="kana-sub">ki</div>
-        <div class="kana-romaji">例：きっぷ（票）</div>
-      </div>
-      <div class="kana-cell">
-        <div class="kana-main">く / ク</div>
-        <div class="kana-sub">ku</div>
-        <div class="kana-romaji">例：くるま（车）</div>
-      </div>
-      <div class="kana-cell">
-        <div class="kana-main">け / ケ</div>
-        <div class="kana-sub">ke</div>
-        <div class="kana-romaji">例：けさ（今天早上）</div>
-      </div>
-      <div class="kana-cell">
-        <div class="kana-main">こ / コ</div>
-        <div class="kana-sub">ko</div>
-        <div class="kana-romaji">例：こども（孩子）</div>
-      </div>
-    </div>
-
-    <!-- 以后你可以按行继续往下：さ行、た行…… -->
+    <h3>五十音（清音＋浊音＋半浊音＋拗音）</h3>
+    <div id="kanaSections"></div>
   </div>
 
-  <!-- Page 2: 日常礼貌用语 -->
+  <!-- 礼貌用语：整块包在 phrases 页面里 -->
   <div id="phrases" class="page">
-    <h3>日常礼貌用语 100 句</h3>
-    <div class="section-desc">
-      按场景背句子：先学会“能开口”，再慢慢管语法。
+    <h3>日常礼貌用语</h3>
+
+    <!-- 日常打招呼・邻居 -->
+    <h4>【日常打招呼・邻居】</h4>
+
+    <div class="card" onclick="speakKana('おはようございます。')">
+      <div class="jp">おはようございます。</div>
+      <div class="romaji">ohayou gozaimasu</div>
+      <div class="zh">早上好（礼貌说法）。</div>
+      <div class="scene">场景：早上在楼下、电梯遇到邻居。</div>
     </div>
 
-    <h4>【日常打招呼 · 邻居】</h4>
-    <div class="card">
+    <div class="card" onclick="speakKana('こんにちは。')">
+      <div class="jp">こんにちは。</div>
+      <div class="romaji">konnichiwa</div>
+      <div class="zh">你好（白天见面用）。</div>
+      <div class="scene">场景：白天在小区、电梯、便利店见面。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('こんばんは。')">
+      <div class="jp">こんばんは。</div>
+      <div class="romaji">konbanwa</div>
+      <div class="zh">晚上好。</div>
+      <div class="scene">场景：晚上在楼下、停车场遇到邻居。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('いつもありがとうございます。')">
       <div class="jp">いつもありがとうございます。</div>
       <div class="romaji">itsumo arigatou gozaimasu</div>
       <div class="zh">一直以来谢谢您。</div>
-      <div class="scene">场景：邻居、便利店店员、帮过你忙的人。</div>
+      <div class="scene">场景：经常帮忙的邻居、管理员、便利店店员。</div>
     </div>
 
-    <div class="card">
+    <div class="card" onclick="speakKana('息子がまだ4歳なので、少しうるさかったらすみません。')">
       <div class="jp">息子がまだ4歳なので、少しうるさかったらすみません。</div>
-      <div class="romaji">musuko ga mada yon-sai nanode, sukoshi urusakattara sumimasen</div>
+      <div class="romaji">
+        musuko ga mada yon-sai nanode, sukoshi urusakattara sumimasen
+      </div>
       <div class="zh">我儿子才4岁，如果有点吵的话，不好意思。</div>
-      <div class="scene">场景：和邻居解释小孩吵闹。</div>
+      <div class="scene">场景：孩子吵闹时向邻居道歉、解释。</div>
     </div>
 
-    <div class="card">
+    <div class="card" onclick="speakKana('ご迷惑をおかけしたら、すみません。')">
       <div class="jp">ご迷惑をおかけしたら、すみません。</div>
       <div class="romaji">gomeiwaku o okake shitara, sumimasen</div>
-      <div class="zh">如果给您添麻烦了，真抱歉。</div>
+      <div class="zh">如果给您添麻烦了，真是不好意思。</div>
+      <div class="scene">场景：任何觉得可能打扰到别人的情况。</div>
     </div>
 
-    <h4>【便利店】</h4>
-    <div class="card">
-      <div class="jp">袋いりません。</div>
-      <div class="romaji">fukuro irimasen</div>
-      <div class="zh">不需要袋子。</div>
+    <div class="card" onclick="speakKana('またよろしくお願いします。')">
+      <div class="jp">またよろしくお願いします。</div>
+      <div class="romaji">mata yoroshiku onegaishimasu</div>
+      <div class="zh">之后也请多多关照。</div>
+      <div class="scene">场景：聊天结束、告别时用，很日本人的说法。</div>
     </div>
 
-    <div class="card">
-      <div class="jp">そのままで大丈夫です。</div>
-      <div class="romaji">sono mama de daijoubu desu</div>
-      <div class="zh">这样就可以（不用再处理）。</div>
-      <div class="scene">场景：是否要加热、装袋时都能用。</div>
-    </div>
-
+    <!-- 区役所 -->
     <h4>【区役所】</h4>
-    <div class="card">
+
+    <div class="card" onclick="speakKana('転入の手続きをお願いしたいのですが。')">
       <div class="jp">転入の手続きをお願いしたいのですが。</div>
       <div class="romaji">tennyuu no tetsuzuki o onegaishitai no desu ga</div>
       <div class="zh">我想办理迁入手续。</div>
+      <div class="scene">场景：到区役所窗口说明来意。</div>
     </div>
 
-    <div class="card">
+    <div class="card" onclick="speakKana('住民票を取りたいです。')">
+      <div class="jp">住民票を取りたいです。</div>
+      <div class="romaji">juuminhyou o toritai desu</div>
+      <div class="zh">我想申请住民票。</div>
+      <div class="scene">场景：办各种业务前需要住民票。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('妻と子どもの転入も一緒にお願いします。')">
+      <div class="jp">妻と子どもの転入も一緒にお願いします。</div>
+      <div class="romaji">tsuma to kodomo no tennyuu mo issho ni onegaishimasu</div>
+      <div class="zh">请把我妻子和孩子的迁入也一起办理。</div>
+      <div class="scene">场景：一家人一起办理登录。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('日本語があまり上手ではないので、ゆっくり話していただけますか。')">
       <div class="jp">日本語があまり上手ではないので、ゆっくり話していただけますか。</div>
-      <div class="romaji">nihongo ga amari jouzu de wa nai node, yukkuri hanashite itadakemasu ka</div>
+      <div class="romaji">
+        nihongo ga amari jouzu de wa nai node, yukkuri hanashite itadakemasu ka
+      </div>
       <div class="zh">我日语不太好，可以说慢一点吗？</div>
+      <div class="scene">场景：听不太懂时必备的一句。</div>
     </div>
 
+    <div class="card" onclick="speakKana('必要な書類はこれで大丈夫ですか。')">
+      <div class="jp">必要な書類はこれで大丈夫ですか。</div>
+      <div class="romaji">hitsuyou na shorui wa kore de daijoubu desu ka</div>
+      <div class="zh">需要的材料这样就够了吗？</div>
+      <div class="scene">场景：递交文件时确认是否齐全。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('予約は必要ですか。')">
+      <div class="jp">予約は必要ですか。</div>
+      <div class="romaji">yoyaku wa hitsuyou desu ka</div>
+      <div class="zh">需要预约吗？</div>
+      <div class="scene">场景：不确定是否要提前预约时。</div>
+    </div>
+
+    <!-- 银行 -->
     <h4>【银行】</h4>
-    <div class="card">
+
+    <div class="card" onclick="speakKana('口座を作りたいです。')">
       <div class="jp">口座を作りたいです。</div>
       <div class="romaji">kouza o tsukuritai desu</div>
       <div class="zh">我想开一个银行账户。</div>
+      <div class="scene">场景：个人开户。</div>
     </div>
 
-    <div class="card">
-      <div class="jp">法人名義の口座は作れますか。</div>
-      <div class="romaji">houjin meigi no kouza wa tsukuremasu ka</div>
+    <div class="card" onclick="speakKana('法人名義の口座を作れますか。')">
+      <div class="jp">法人名義の口座を作れますか。</div>
+      <div class="romaji">houjin meigi no kouza o tsukuremasu ka</div>
       <div class="zh">可以开法人名义的账户吗？</div>
+      <div class="scene">场景：公司账户开户。</div>
     </div>
 
-    <!-- 以后你可以在这里一直追加句子，直到 100 句 -->
+    <div class="card" onclick="speakKana('振り込みをお願いしたいです。')">
+      <div class="jp">振り込みをお願いしたいです。</div>
+      <div class="romaji">furikomi o onegai shitai desu</div>
+      <div class="zh">我想办理转账。</div>
+      <div class="scene">场景：柜台转账。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('住所変更をしたいです。')">
+      <div class="jp">住所変更をしたいです。</div>
+      <div class="romaji">juusho henkou o shitai desu</div>
+      <div class="zh">我想变更住址。</div>
+      <div class="scene">场景：搬家后更新银行地址。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('書き方を教えていただけますか。')">
+      <div class="jp">書き方を教えていただけますか。</div>
+      <div class="romaji">kakikata o oshiete itadakemasu ka</div>
+      <div class="zh">能教我怎么填写吗？</div>
+      <div class="scene">场景：不会填表格时。</div>
+    </div>
+
+    <!-- 机场 -->
+    <h4>【机场】</h4>
+
+    <div class="card" onclick="speakKana('チェックインをお願いします。')">
+      <div class="jp">チェックインをお願いします。</div>
+      <div class="romaji">chekkuin o onegai shimasu</div>
+      <div class="zh">我要办理登机手续。</div>
+      <div class="scene">场景：值机柜台。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('こちらがパスポートと在留カードです。')">
+      <div class="jp">こちらがパスポートと在留カードです。</div>
+      <div class="romaji">kochira ga pasupooto to zairyuu kaado desu</div>
+      <div class="zh">这是我的护照和在留卡。</div>
+      <div class="scene">场景：向工作人员出示证件。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('これは預け荷物です。')">
+      <div class="jp">これは預け荷物です。</div>
+      <div class="romaji">kore wa azuke nimotsu desu</div>
+      <div class="zh">这是托运行李。</div>
+      <div class="scene">场景：办理行李托运时。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('手荷物はこれだけです。')">
+      <div class="jp">手荷物はこれだけです。</div>
+      <div class="romaji">tenimotsu wa kore dake desu</div>
+      <div class="zh">随身行李只有这些。</div>
+      <div class="scene">场景：确认随身携带的行李。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('家の事情で一度帰国する必要があり、１か月ほどで戻ってくる予定です。')">
+      <div class="jp">家の事情で一度帰国する必要があり、１か月ほどで戻ってくる予定です。</div>
+      <div class="romaji">
+        ie no jijou de ichido kikoku suru hitsuyou ga ari, ikkagetsu hodo de modotte kuru yotei desu
+      </div>
+      <div class="zh">因为家里有点事，需要先回国办理，预计大约一个月后回来。</div>
+      <div class="scene">场景：被问停留时间、回程计划时。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('いつ手続きが終わるか分からないので、帰りのチケットはまだ買っていません。')">
+      <div class="jp">いつ手続きが終わるか分からないので、帰りのチケットはまだ買っていません。</div>
+      <div class="romaji">
+        itsu tetsuzuki ga owaru ka wakaranai node, kaeri no chiketto wa mada katte imasen
+      </div>
+      <div class="zh">因为不知道什么时候能办完，所以暂时还没有买回程机票。</div>
+      <div class="scene">场景：说明没有买回程票的理由。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('乗り継ぎはどこに行けばいいですか。')">
+      <div class="jp">乗り継ぎはどこに行けばいいですか。</div>
+      <div class="romaji">noritsugi wa doko ni ikeba ii desu ka</div>
+      <div class="zh">转机要去哪里？</div>
+      <div class="scene">场景：中转机场找不到登机口时。</div>
+    </div>
+
+    <!-- 小区楼下 -->
+    <h4>【小区楼下・电梯・垃圾场】</h4>
+
+    <div class="card" onclick="speakKana('今日は燃えるゴミの日ですよ。')">
+      <div class="jp">今日は燃えるゴミの日ですよ。</div>
+      <div class="romaji">kyou wa moeru gomi no hi desu yo</div>
+      <div class="zh">今天是可燃垃圾日哦。</div>
+      <div class="scene">场景：顺便提醒邻居扔垃圾。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('ゴミ置き場はどこですか。')">
+      <div class="jp">ゴミ置き場はどこですか。</div>
+      <div class="romaji">gomi okiba wa doko desu ka</div>
+      <div class="zh">垃圾投放点在哪里？</div>
+      <div class="scene">场景：刚搬来时询问垃圾地点。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('いつもお世話になっています。')">
+      <div class="jp">いつもお世話になっています。</div>
+      <div class="romaji">itsumo osewa ni natte imasu</div>
+      <div class="zh">平时多有照顾。</div>
+      <div class="scene">场景：和管理人、邻居打招呼时的客套话。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('ここに停めても大丈夫ですか。')">
+      <div class="jp">ここに停めても大丈夫ですか。</div>
+      <div class="romaji">koko ni tomete mo daijoubu desu ka</div>
+      <div class="zh">停在这里可以吗？</div>
+      <div class="scene">场景：问停车位是否可以停。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('エレベーターを開けておきますね。')">
+      <div class="jp">エレベーターを開けておきますね。</div>
+      <div class="romaji">erebeetaa o akete okimasu ne</div>
+      <div class="zh">我帮你按着电梯门。</div>
+      <div class="scene">场景：看到别人要进电梯，帮忙按门。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('お先にどうぞ。')">
+      <div class="jp">お先にどうぞ。</div>
+      <div class="romaji">osaki ni douzo</div>
+      <div class="zh">你先请。</div>
+      <div class="scene">场景：电梯、门口、走廊互相礼让时。</div>
+    </div>
+
+    <!-- 便利店・超市 -->
+    <h4>【便利店・超市】</h4>
+
+    <div class="card" onclick="speakKana('これをお願いします。')">
+      <div class="jp">これをお願いします。</div>
+      <div class="romaji">kore o onegaishimasu</div>
+      <div class="zh">我要买这个。</div>
+      <div class="scene">场景：把商品递给店员结账时。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('袋いりません。')">
+      <div class="jp">袋いりません。</div>
+      <div class="romaji">fukuro irimasen</div>
+      <div class="zh">不需要袋子。</div>
+      <div class="scene">场景：店员问要不要袋子时。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('そのままで大丈夫です。')">
+      <div class="jp">そのままで大丈夫です。</div>
+      <div class="romaji">sono mama de daijoubu desu</div>
+      <div class="zh">这样就可以。</div>
+      <div class="scene">场景：问要不要加热、再装袋时。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('ポイントカードはありません。')">
+      <div class="jp">ポイントカードはありません。</div>
+      <div class="romaji">pointo kaado wa arimasen</div>
+      <div class="zh">我没有积分卡。</div>
+      <div class="scene">场景：店员问有没有积分卡时。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('〇〇はどこにありますか。')">
+      <div class="jp">〇〇はどこにありますか。</div>
+      <div class="romaji">___ wa doko ni arimasu ka</div>
+      <div class="zh">××在哪里？（比如：牛奶在哪里？）</div>
+      <div class="scene">场景：找不到商品时，可把〇〇换成“牛乳”“パン”等。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('すみません、もう一度値段を教えていただけますか。')">
+      <div class="jp">すみません、もう一度値段を教えていただけますか。</div>
+      <div class="romaji">
+        sumimasen, mou ichido nedan o oshiete itadakemasu ka
+      </div>
+      <div class="zh">不好意思，可以再告诉我一次价格吗？</div>
+      <div class="scene">场景：没有听清价格时。</div>
+    </div>
+
+    <!-- 医院 -->
+    <h4>【医院】</h4>
+
+    <div class="card" onclick="speakKana('診察を予約した〇〇です。')">
+      <div class="jp">診察を予約した〇〇です。</div>
+      <div class="romaji">shinsatsu o yoyaku shita ___ desu</div>
+      <div class="zh">我是预约看诊的××。</div>
+      <div class="scene">场景：到前台报上自己是预约病人。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('初めて来ました。')">
+      <div class="jp">初めて来ました。</div>
+      <div class="romaji">hajimete kimashita</div>
+      <div class="zh">我是第一次来。</div>
+      <div class="scene">场景：初诊时使用。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('今日は頭が痛いです。')">
+      <div class="jp">今日は頭が痛いです。</div>
+      <div class="romaji">kyou wa atama ga itai desu</div>
+      <div class="zh">我今天头有点疼。</div>
+      <div class="scene">场景：看诊时说明症状。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('ここが痛いです。')">
+      <div class="jp">ここが痛いです。</div>
+      <div class="romaji">koko ga itai desu</div>
+      <div class="zh">这里痛。</div>
+      <div class="scene">场景：用手指着身体某处。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('これは保険証です。')">
+      <div class="jp">これは保険証です。</div>
+      <div class="romaji">kore wa hokenshou desu</div>
+      <div class="zh">这是我的保险证。</div>
+      <div class="scene">场景：向前台出示健康保险证。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('薬の飲み方を教えていただけますか。')">
+      <div class="jp">薬の飲み方を教えていただけますか。</div>
+      <div class="romaji">kusuri no nomikata o oshiete itadakemasu ka</div>
+      <div class="zh">可以告诉我药怎么吃吗？</div>
+      <div class="scene">场景：不确定服药方法时。</div>
+    </div>
+
+    <!-- 幼儿园・和老师寒暄 -->
+    <h4>【幼儿园・和老师寒暄】</h4>
+
+    <div class="card" onclick="speakKana('いつもお世話になっております。')">
+      <div class="jp">いつもお世話になっております。</div>
+      <div class="romaji">itsumo osewa ni natte orimasu</div>
+      <div class="zh">一直以来承蒙照顾。</div>
+      <div class="scene">场景：对老师开口第一句，非常标准的家长用语。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('〇〇がお世話になっています。')">
+      <div class="jp">〇〇がお世話になっています。</div>
+      <div class="romaji">___ ga osewa ni natte imasu</div>
+      <div class="zh">××一直受到您的照顾。</div>
+      <div class="scene">场景：提到自己的孩子时，把〇〇换成孩子的名字。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('今日は少し遅れます。')">
+      <div class="jp">今日は少し遅れます。</div>
+      <div class="romaji">kyou wa sukoshi okuremasu</div>
+      <div class="zh">今天会稍微晚一点。</div>
+      <div class="scene">场景：早上送园或下午接孩子稍微晚到时。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('今日は少し体調が悪いです。')">
+      <div class="jp">今日は少し体調が悪いです。</div>
+      <div class="romaji">kyou wa sukoshi taichou ga warui desu</div>
+      <div class="zh">孩子今天有点不舒服。</div>
+      <div class="scene">场景：交代孩子可能状态不太好。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('何か気になることがあれば教えてください。')">
+      <div class="jp">何か気になることがあれば教えてください。</div>
+      <div class="romaji">nanika ki ni naru koto ga areba oshiete kudasai</div>
+      <div class="zh">如果有什么情况，请告诉我。</div>
+      <div class="scene">场景：表达愿意配合老师的态度。</div>
+    </div>
+
+    <div class="card" onclick="speakKana('日本語があまり上手ではないので、ゆっくり話していただけると助かります。')">
+      <div class="jp">日本語があまり上手ではないので、ゆっくり話していただけると助かります。</div>
+      <div class="romaji">
+        nihongo ga amari jouzu de wa nai node, yukkuri hanashite itadakeru to tasukarimasu
+      </div>
+      <div class="zh">我日语不太好，如果能说慢一点就太好了。</div>
+      <div class="scene">场景：和老师沟通时，提前说明自己的日语情况。</div>
+    </div>
   </div>
 
-  <!-- Page 3: 语法 -->
+  <!-- 礼貌用语：整块包在 phrases 页面里 -->
+  <div id="phrases" class="page">
+    ... 原来的礼貌用语卡片 ...
+  </div>
+
+  <!-- 常用单词 -->
+<div id="words" class="page">
+  <h3>常用単語（生活・病院・区役所など）</h3>
+
+  <!-- ============================
+       ① 家庭・人物相关
+  ============================ -->
+  <h4>家庭・人物</h4>
+
+  <div class="card" onclick="speakKana('息子')">
+    <div class="jp">息子</div><div class="romaji">musuko</div><div class="zh">儿子</div>
+  </div>
+  <div class="card" onclick="speakKana('娘')">
+    <div class="jp">娘</div><div class="romaji">musume</div><div class="zh">女儿</div>
+  </div>
+  <div class="card" onclick="speakKana('子ども')">
+    <div class="jp">子ども</div><div class="romaji">kodomo</div><div class="zh">孩子</div>
+  </div>
+  <div class="card" onclick="speakKana('家族')">
+    <div class="jp">家族</div><div class="romaji">kazoku</div><div class="zh">家人</div>
+  </div>
+<div class="card" onclick="speakKana('夫')">
+  <div class="jp">夫</div><div class="romaji">otto</div><div class="zh">丈夫</div>
+</div>
+
+<div class="card" onclick="speakKana('妻')">
+  <div class="jp">妻</div><div class="romaji">tsuma</div><div class="zh">妻子</div>
+</div>
+
+<div class="card" onclick="speakKana('おじいちゃん')">
+  <div class="jp">おじいちゃん</div><div class="romaji">ojiichan</div><div class="zh">爷爷 / 外公（口语）</div>
+</div>
+
+<div class="card" onclick="speakKana('おばあちゃん')">
+  <div class="jp">おばあちゃん</div><div class="romaji">obaachan</div><div class="zh">奶奶 / 外婆（口语）</div>
+</div>
+
+<div class="card" onclick="speakKana('弟')">
+  <div class="jp">弟</div><div class="romaji">otouto</div><div class="zh">弟弟</div>
+</div>
+
+<div class="card" onclick="speakKana('兄')">
+  <div class="jp">兄</div><div class="romaji">ani</div><div class="zh">哥哥</div>
+</div>
+
+<div class="card" onclick="speakKana('姉')">
+  <div class="jp">姉</div><div class="romaji">ane</div><div class="zh">姐姐</div>
+</div>
+
+<div class="card" onclick="speakKana('妹')">
+  <div class="jp">妹</div><div class="romaji">imouto</div><div class="zh">妹妹</div>
+</div>
+
+<div class="card" onclick="speakKana('義理のお父さん')">
+  <div class="jp">義理のお父さん</div><div class="romaji">giri no otousan</div><div class="zh">岳父（老婆的爸爸）</div>
+</div>
+
+<div class="card" onclick="speakKana('義理のお母さん')">
+  <div class="jp">義理のお母さん</div><div class="romaji">giri no okaasan</div><div class="zh">岳母（老婆的妈妈）</div>
+</div>
+
+<div class="card" onclick="speakKana('義理のお母さん')">
+  <div class="jp">義理のお母さん</div><div class="romaji">giri no okaasan</div><div class="zh">婆婆 / 老公的妈妈</div>
+</div>
+
+  <!-- ============================
+       ② 邻居交流・生活场景
+  ============================ -->
+  <h4>生活・邻居交流</h4>
+
+  <div class="card" onclick="speakKana('無理')">
+    <div class="jp">無理</div><div class="romaji">muri</div><div class="zh">不行、很困难</div>
+  </div>
+  <div class="card" onclick="speakKana('大丈夫')">
+    <div class="jp">大丈夫</div><div class="romaji">daijoubu</div><div class="zh">没关系</div>
+  </div>
+  <div class="card" onclick="speakKana('すみません')">
+    <div class="jp">すみません</div><div class="romaji">sumimasen</div><div class="zh">不好意思</div>
+  </div>
+  <div class="card" onclick="speakKana('ありがとうございます')">
+    <div class="jp">ありがとうございます</div><div class="romaji">arigatou gozaimasu</div><div class="zh">谢谢</div>
+  </div>
+  <div class="card" onclick="speakKana('ごめんなさい')">
+    <div class="jp">ごめんなさい</div><div class="romaji">gomen nasai</div><div class="zh">对不起</div>
+  </div>
+  <div class="card" onclick="speakKana('ゴミ')">
+    <div class="jp">ゴミ</div><div class="romaji">gomi</div><div class="zh">垃圾</div>
+  </div>
+
+  <!-- ============================
+       ③ 时间表达
+  ============================ -->
+  <h4>时间表达</h4>
+
+  <div class="card" onclick="speakKana('今日')">
+    <div class="jp">今日</div><div class="romaji">kyou</div><div class="zh">今天</div>
+  </div>
+  <div class="card" onclick="speakKana('明日')">
+    <div class="jp">明日</div><div class="romaji">ashita</div><div class="zh">明天</div>
+  </div>
+  <div class="card" onclick="speakKana('いつ')">
+    <div class="jp">いつ</div><div class="romaji">itsu</div><div class="zh">什么时候</div>
+  </div>
+  <div class="card" onclick="speakKana('何時')">
+    <div class="jp">何時</div><div class="romaji">nanji</div><div class="zh">几点</div>
+  </div>
+  <div class="card" onclick="speakKana('何歳')">
+    <div class="jp">何歳</div><div class="romaji">nansai</div><div class="zh">几岁</div>
+  </div>
+
+  <!-- ============================
+       ④ 购物 / 支付 / 商务
+  ============================ -->
+  <h4>购物・商務</h4>
+
+  <div class="card" onclick="speakKana('注文')">
+    <div class="jp">注文</div><div class="romaji">chūmon</div><div class="zh">订单</div>
+  </div>
+  <div class="card" onclick="speakKana('支払い')">
+    <div class="jp">支払い</div><div class="romaji">shiharai</div><div class="zh">支付</div>
+  </div>
+  <div class="card" onclick="speakKana('価格')">
+    <div class="jp">価格</div><div class="romaji">kakaku</div><div class="zh">价格</div>
+  </div>
+  <div class="card" onclick="speakKana('税込')">
+    <div class="jp">税込</div><div class="romaji">zeikomi</div><div class="zh">含税</div>
+  </div>
+
+    <!-- ============================
+       ⑤ 区役所・政府・手续（更新版）
+  ============================ -->
+  <h4>区役所・手续</h4>
+
+  <div class="card" onclick="speakKana('区役所')">
+    <div class="jp">区役所</div><div class="romaji">kuyakusho</div><div class="zh">区役所</div>
+  </div>
+
+  <div class="card" onclick="speakKana('転入届')">
+    <div class="jp">転入届</div><div class="romaji">tennyuu todoke</div><div class="zh">新入住登记</div>
+  </div>
+
+  <div class="card" onclick="speakKana('住民票')">
+    <div class="jp">住民票</div><div class="romaji">juminhyou</div><div class="zh">住民票</div>
+  </div>
+
+  <div class="card" onclick="speakKana('在留カード')">
+    <div class="jp">在留カード</div><div class="romaji">zairyuu kādo</div><div class="zh">在留卡（在留资格卡）</div>
+  </div>
+
+  <div class="card" onclick="speakKana('マイナンバーカード')">
+    <div class="jp">マイナンバーカード</div><div class="romaji">mainanbā kādo</div><div class="zh">MyNumber卡（个人番号卡）</div>
+  </div>
+
+  <div class="card" onclick="speakKana('国民健康保険')">
+    <div class="jp">国民健康保険</div><div class="romaji">kokumin kenkou hoken</div><div class="zh">国民健康保险</div>
+  </div>
+
+  <div class="card" onclick="speakKana('保険証')">
+    <div class="jp">保険証</div><div class="romaji">hokenshou</div><div class="zh">健康保险证</div>
+  </div>
+
+  <div class="card" onclick="speakKana('書類')">
+    <div class="jp">書類</div><div class="romaji">shorui</div><div class="zh">文件资料</div>
+  </div>
+
+  <!-- ============================
+       ⑥ 医院・小儿科（新增）
+  ============================ -->
+  <h4>病院・小児科</h4>
+
+  <div class="card" onclick="speakKana('病院')">
+    <div class="jp">病院</div><div class="romaji">byouin</div><div class="zh">医院</div>
+  </div>
+  <div class="card" onclick="speakKana('クリニック')">
+    <div class="jp">クリニック</div><div class="romaji">kurinikku</div><div class="zh">诊所</div>
+  </div>
+  <div class="card" onclick="speakKana('小児科')">
+    <div class="jp">小児科</div><div class="romaji">shounika</div><div class="zh">小儿科</div>
+  </div>
+  <div class="card" onclick="speakKana('内科')">
+    <div class="jp">内科</div><div class="romaji">naika</div><div class="zh">内科</div>
+  </div>
+
+  <div class="card" onclick="speakKana('受付')">
+    <div class="jp">受付</div><div class="romaji">uketsuke</div><div class="zh">挂号/接待窗口</div>
+  </div>
+  <div class="card" onclick="speakKana('診察')">
+    <div class="jp">診察</div><div class="romaji">shinsatsu</div><div class="zh">看诊</div>
+  </div>
+  <div class="card" onclick="speakKana('問診票')">
+    <div class="jp">問診票</div><div class="romaji">monshin-hyou</div><div class="zh">问诊表</div>
+  </div>
+
+  <div class="card" onclick="speakKana('熱')">
+    <div class="jp">熱</div><div class="romaji">netsu</div><div class="zh">发烧</div>
+  </div>
+  <div class="card" onclick="speakKana('咳')">
+    <div class="jp">咳</div><div class="romaji">seki</div><div class="zh">咳嗽</div>
+  </div>
+  <div class="card" onclick="speakKana('鼻水')">
+    <div class="jp">鼻水</div><div class="romaji">hanamizu</div><div class="zh">流鼻涕</div>
+  </div>
+  <div class="card" onclick="speakKana('嘔吐')">
+    <div class="jp">嘔吐</div><div class="romaji">outo</div><div class="zh">呕吐</div>
+  </div>
+  <div class="card" onclick="speakKana('湿疹')">
+    <div class="jp">湿疹</div><div class="romaji">shisshin</div><div class="zh">湿疹</div>
+  </div>
+
+  <div class="card" onclick="speakKana('薬')">
+    <div class="jp">薬</div><div class="romaji">kusuri</div><div class="zh">药</div>
+  </div>
+  <div class="card" onclick="speakKana('飲み薬')">
+    <div class="jp">飲み薬</div><div class="romaji">nomigusuri</div><div class="zh">口服药</div>
+  </div>
+  <div class="card" onclick="speakKana('塗り薬')">
+    <div class="jp">塗り薬</div><div class="romaji">nurigusuri</div><div class="zh">外用药膏</div>
+  </div>
+
+  <div class="card" onclick="speakKana('予防接種')">
+    <div class="jp">予防接種</div><div class="romaji">yobou sesshu</div><div class="zh">疫苗接种</div>
+  </div>
+  <div class="card" onclick="speakKana('副反応')">
+    <div class="jp">副反応</div><div class="romaji">fuku hannou</div><div class="zh">副作用</div>
+  </div>
+
+  <!-- ============================
+       ⑦ 必备动词
+  ============================ -->
+  <h4>基本动词</h4>
+
+  <div class="card" onclick="speakKana('行く')">
+    <div class="jp">行く</div><div class="romaji">iku</div><div class="zh">去</div>
+  </div>
+  <div class="card" onclick="speakKana('来る')">
+    <div class="jp">来る</div><div class="romaji">kuru</div><div class="zh">来</div>
+  </div>
+  <div class="card" onclick="speakKana('分かる')">
+    <div class="jp">分かる</div><div class="romaji">wakaru</div><div class="zh">懂、明白</div>
+  </div>
+  <div class="card" onclick="speakKana('できます')">
+    <div class="jp">できます</div><div class="romaji">dekimasu</div><div class="zh">能、可以</div>
+  </div>
+  <div class="card" onclick="speakKana('あります')">
+    <div class="jp">あります</div><div class="romaji">arimasu</div><div class="zh">有（物）</div>
+  </div>
+  <div class="card" onclick="speakKana('います')">
+    <div class="jp">います</div><div class="romaji">imasu</div><div class="zh">有（人/动物）</div>
+  </div>
+
+</div>
+
+
+  <!-- 语法 -->
   <div id="grammar" class="page">
-    <h3>常用固定语法</h3>
-    <div class="section-desc">
-      只记录自己常遇到、常用的语法，用自己的话来理解。
-    </div>
-
-    <div class="card">
-      <div class="jp">原因：〜ので / 〜から（因为……）</div>
-      <div class="zh">
-        「ので」：更委婉、更有礼貌。<br>
-        「から」：普通口语最常用。<br><br>
-        例：<br>
-        息子が小さいので、外出は少し大変です。<br>
-        因为儿子还小，出门有点麻烦。<br><br>
-        時間がないから、今日は無理です。<br>
-        因为没有时间，今天不行。
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="jp">转折：でも / けど / しかし（但是）</div>
-      <div class="zh">
-        でも：最常用，放在句首。<br>
-        けど：放句中或句尾，更口语。<br>
-        しかし：比较正式，新闻、书面。<br><br>
-        例：行きたいです。でも、今日は忙しいです。<br>
-        想去，但是今天很忙。<br><br>
-        行きたいけど、今日は忙しいです。<br>
-        想去，但今天忙。
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="jp">让步：〜ても（即使……也……）</div>
-      <div class="zh">
-        例：雨が降っても、ゴミを出さないといけません。<br>
-        即使下雨，也必须去倒垃圾。<br><br>
-        子どもがうるさくても、大丈夫ですよ。<br>
-        即使孩子有点吵，也没关系哦。
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="jp">之前：前に / この前 / 以前</div>
-      <div class="zh">
-        前に：动作发生前。<br>
-        この前：不久之前（前阵子）。<br>
-        以前：更早以前。<br><br>
-        日本に来る前に、少し日本語を勉強しました。<br>
-        来日本之前，学了一点日语。<br><br>
-        この前、区役所に行きました。<br>
-        前几天去了一次区役所。
-      </div>
-    </div>
-
+    ...
   </div>
+
+
+  <!-- 语法 -->
+  <div id="grammar" class="page">
+    <h3>常用语法</h3>
+
+    <div class="card">
+      <div class="jp">〜ので／〜から</div>
+      <div class="romaji">...（之后我们再慢慢补）</div>
+      <div class="zh">因为……</div>
+    </div>
+  </div>
+
+  <!-- 测验模式 -->
+  <div id="quiz" class="page">
+    <h3>假名测验（随机抽取）</h3>
+
+    <div class="quiz-box">
+      <div id="quizKana" class="quiz-kana">？</div>
+
+      <button class="quiz-btn" onclick="showQuizAnswer()">显示罗马音</button>
+      <button class="quiz-btn sub" onclick="nextQuiz()">下一题</button>
+
+      <div id="quizAnswer" class="quiz-answer"></div>
+    </div>
+  </div>
+
 </div>
 
 <script>
-  function showPage(id, btn) {
-    // 切换页面
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
+/* 切换页面 */
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
 
-    // 切换 tab 高亮
-    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+/* 五十音数据（含拗音） */
+const kanaSectionsData = [
+  {
+    title: "清音：あ行",
+    items: [
+      { hira: "あ", kata: "ア", romaji: "a", example: "ありがとう" },
+      { hira: "い", kata: "イ", romaji: "i", example: "いえ" },
+      { hira: "う", kata: "ウ", romaji: "u", example: "うみ" },
+      { hira: "え", kata: "エ", romaji: "e", example: "えき" },
+      { hira: "お", kata: "オ", romaji: "o", example: "おかね" }
+    ]
+  },
+  {
+    title: "清音：か行",
+    items: [
+      { hira: "か", kata: "カ", romaji: "ka", example: "かさ" },
+      { hira: "き", kata: "キ", romaji: "ki", example: "きっぷ" },
+      { hira: "く", kata: "ク", romaji: "ku", example: "くるま" },
+      { hira: "け", kata: "ケ", romaji: "ke", example: "けさ" },
+      { hira: "こ", kata: "コ", romaji: "ko", example: "こども" }
+    ]
+  },
+  {
+    title: "清音：さ行",
+    items: [
+      { hira: "さ", kata: "サ", romaji: "sa", example: "さかな" },
+      { hira: "し", kata: "シ", romaji: "shi", example: "した" },
+      { hira: "す", kata: "ス", romaji: "su", example: "すし" },
+      { hira: "せ", kata: "セ", romaji: "se", example: "せんせい" },
+      { hira: "そ", kata: "ソ", romaji: "so", example: "そと" }
+    ]
+  },
+  {
+    title: "清音：た行",
+    items: [
+      { hira: "た", kata: "タ", romaji: "ta", example: "たまご" },
+      { hira: "ち", kata: "チ", romaji: "chi", example: "ちず" },
+      { hira: "つ", kata: "ツ", romaji: "tsu", example: "つき" },
+      { hira: "て", kata: "テ", romaji: "te", example: "て" },
+      { hira: "と", kata: "ト", romaji: "to", example: "ともだち" }
+    ]
+  },
+  {
+    title: "清音：な行",
+    items: [
+      { hira: "な", kata: "ナ", romaji: "na", example: "なまえ" },
+      { hira: "に", kata: "ニ", romaji: "ni", example: "にく" },
+      { hira: "ぬ", kata: "ヌ", romaji: "nu", example: "ぬの" },
+      { hira: "ね", kata: "ネ", romaji: "ne", example: "ねこ" },
+      { hira: "の", kata: "ノ", romaji: "no", example: "のり" }
+    ]
+  },
+  {
+    title: "清音：は行",
+    items: [
+      { hira: "は", kata: "ハ", romaji: "ha", example: "はな" },
+      { hira: "ひ", kata: "ヒ", romaji: "hi", example: "ひ" },
+      { hira: "ふ", kata: "フ", romaji: "fu", example: "ふく" },
+      { hira: "へ", kata: "ヘ", romaji: "he", example: "へや" },
+      { hira: "ほ", kata: "ホ", romaji: "ho", example: "ほし" }
+    ]
+  },
+  {
+    title: "清音：ま行",
+    items: [
+      { hira: "ま", kata: "マ", romaji: "ma", example: "まど" },
+      { hira: "み", kata: "ミ", romaji: "mi", example: "みず" },
+      { hira: "む", kata: "ム", romaji: "mu", example: "むし" },
+      { hira: "め", kata: "メ", romaji: "me", example: "め" },
+      { hira: "も", kata: "モ", romaji: "mo", example: "もり" }
+    ]
+  },
+  {
+    title: "清音：や行",
+    items: [
+      { hira: "や", kata: "ヤ", romaji: "ya", example: "やさい" },
+      { hira: "ゆ", kata: "ユ", romaji: "yu", example: "ゆき" },
+      { hira: "よ", kata: "ヨ", romaji: "yo", example: "よる" }
+    ]
+  },
+  {
+    title: "清音：ら行",
+    items: [
+      { hira: "ら", kata: "ラ", romaji: "ra", example: "らいねん" },
+      { hira: "り", kata: "リ", romaji: "ri", example: "りょうり" },
+      { hira: "る", kata: "ル", romaji: "ru", example: "るす" },
+      { hira: "れ", kata: "レ", romaji: "re", example: "れきし" },
+      { hira: "ろ", kata: "ロ", romaji: "ro", example: "ろうか" }
+    ]
+  },
+  {
+    title: "清音：わ行",
+    items: [
+      { hira: "わ", kata: "ワ", romaji: "wa", example: "わたし" },
+      { hira: "を", kata: "ヲ", romaji: "o / wo", example: "助词「を」" },
+      { hira: "ん", kata: "ン", romaji: "n", example: "ほん" }
+    ]
+  },
 
-    // 切换后滚回页面顶部一点点，方便手机阅读
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  /* 浊音 */
+  {
+    title: "浊音：が行",
+    items: [
+      { hira: "が", kata: "ガ", romaji: "ga", example: "がくせい" },
+      { hira: "ぎ", kata: "ギ", romaji: "gi", example: "ぎんこう" },
+      { hira: "ぐ", kata: "グ", romaji: "gu", example: "ぐんて" },
+      { hira: "げ", kata: "ゲ", romaji: "ge", example: "げんき" },
+      { hira: "ご", kata: "ゴ", romaji: "go", example: "ごみ" }
+    ]
+  },
+  {
+    title: "浊音：ざ行",
+    items: [
+      { hira: "ざ", kata: "ザ", romaji: "za", example: "ざっし" },
+      { hira: "じ", kata: "ジ", romaji: "ji", example: "じかん" },
+      { hira: "ず", kata: "ズ", romaji: "zu", example: "ずぼん" },
+      { hira: "ぜ", kata: "ゼ", romaji: "ze", example: "ぜんぶ" },
+      { hira: "ぞ", kata: "ゾ", romaji: "zo", example: "ぞう" }
+    ]
+  },
+  {
+    title: "浊音：だ行",
+    items: [
+      { hira: "だ", kata: "ダ", romaji: "da", example: "だいじょうぶ" },
+      { hira: "ぢ", kata: "ヂ", romaji: "ji（罕用）", example: "" },
+      { hira: "づ", kata: "ヅ", romaji: "zu（罕用）", example: "" },
+      { hira: "で", kata: "デ", romaji: "de", example: "でんしゃ" },
+      { hira: "ど", kata: "ド", romaji: "do", example: "どうぞ" }
+    ]
+  },
+  {
+    title: "浊音：ば行",
+    items: [
+      { hira: "ば", kata: "バ", romaji: "ba", example: "ばんごはん" },
+      { hira: "び", kata: "ビ", romaji: "bi", example: "びょういん" },
+      { hira: "ぶ", kata: "ブ", romaji: "bu", example: "ぶんしょう" },
+      { hira: "べ", kata: "ベ", romaji: "be", example: "べんきょう" },
+      { hira: "ぼ", kata: "ボ", romaji: "bo", example: "ぼうし" }
+    ]
+  },
+
+  /* 半浊音 */
+  {
+    title: "半浊音：ぱ行",
+    items: [
+      { hira: "ぱ", kata: "パ", romaji: "pa", example: "パン" },
+      { hira: "ぴ", kata: "ピ", romaji: "pi", example: "ピザ" },
+      { hira: "ぷ", kata: "プ", romaji: "pu", example: "プール" },
+      { hira: "ぺ", kata: "ペ", romaji: "pe", example: "ペン" },
+      { hira: "ぽ", kata: "ポ", romaji: "po", example: "ポスト" }
+    ]
+  },
+
+  /* 拗音（清音+浊音+半浊音） */
+  {
+    title: "拗音：きゃ・きゅ・きょ",
+    items: [
+      { hira: "きゃ", kata: "キャ", romaji: "kya" },
+      { hira: "きゅ", kata: "キュ", romaji: "kyu" },
+      { hira: "きょ", kata: "キョ", romaji: "kyo" }
+    ]
+  },
+  {
+    title: "拗音：しゃ・しゅ・しょ",
+    items: [
+      { hira: "しゃ", kata: "シャ", romaji: "sha" },
+      { hira: "しゅ", kata: "シュ", romaji: "shu" },
+      { hira: "しょ", kata: "ショ", romaji: "sho" }
+    ]
+  },
+  {
+    title: "拗音：ちゃ・ちゅ・ちょ",
+    items: [
+      { hira: "ちゃ", kata: "チャ", romaji: "cha" },
+      { hira: "ちゅ", kata: "チュ", romaji: "chu" },
+      { hira: "ちょ", kata: "チョ", romaji: "cho" }
+    ]
+  },
+  {
+    title: "拗音：にゃ・にゅ・にょ",
+    items: [
+      { hira: "にゃ", kata: "ニャ", romaji: "nya" },
+      { hira: "にゅ", kata: "ニュ", romaji: "nyu" },
+      { hira: "にょ", kata: "ニョ", romaji: "nyo" }
+    ]
+  },
+  {
+    title: "拗音：ひゃ・ひゅ・ひょ",
+    items: [
+      { hira: "ひゃ", kata: "ヒャ", romaji: "hya" },
+      { hira: "ひゅ", kata: "ヒュ", romaji: "hyu" },
+      { hira: "ひょ", kata: "ヒョ", romaji: "hyo" }
+    ]
+  },
+  {
+    title: "拗音：みゃ・みゅ・みょ",
+    items: [
+      { hira: "みゃ", kata: "ミャ", romaji: "mya" },
+      { hira: "みゅ", kata: "ミュ", romaji: "myu" },
+      { hira: "みょ", kata: "ミョ", romaji: "myo" }
+    ]
+  },
+  {
+    title: "拗音：りゃ・りゅ・りょ",
+    items: [
+      { hira: "りゃ", kata: "リャ", romaji: "rya" },
+      { hira: "りゅ", kata: "リュ", romaji: "ryu" },
+      { hira: "りょ", kata: "リョ", romaji: "ryo" }
+    ]
+  },
+  {
+    title: "拗音：ぎゃ・ぎゅ・ぎょ（浊音）",
+    items: [
+      { hira: "ぎゃ", kata: "ギャ", romaji: "gya" },
+      { hira: "ぎゅ", kata: "ギュ", romaji: "gyu" },
+      { hira: "ぎょ", kata: "ギョ", romaji: "gyo" }
+    ]
+  },
+  {
+    title: "拗音：じゃ・じゅ・じょ（浊音）",
+    items: [
+      { hira: "じゃ", kata: "ジャ", romaji: "ja" },
+      { hira: "じゅ", kata: "ジュ", romaji: "ju" },
+      { hira: "じょ", kata: "ジョ", romaji: "jo" }
+    ]
+  },
+  {
+    title: "拗音：びゃ・びゅ・びょ（浊音）",
+    items: [
+      { hira: "びゃ", kata: "ビャ", romaji: "bya" },
+      { hira: "びゅ", kata: "ビュ", romaji: "byu" },
+      { hira: "びょ", kata: "ビョ", romaji: "byo" }
+    ]
+  },
+  {
+    title: "拗音：ぴゃ・ぴゅ・ぴょ（半浊音）",
+    items: [
+      { hira: "ぴゃ", kata: "ピャ", romaji: "pya" },
+      { hira: "ぴゅ", kata: "ピュ", romaji: "pyu" },
+      { hira: "ぴょ", kata: "ピョ", romaji: "pyo" }
+    ]
   }
-</script>
+];
 
+/* 语言发音 */
+let jaVoice = null;
+function loadVoices() {
+  const voices = speechSynthesis.getVoices();
+  jaVoice = voices.find(v => v.lang === 'ja-JP');
+}
+speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+
+function speakKana(kana) {
+  let u = new SpeechSynthesisUtterance(kana);
+  u.lang = "ja-JP";
+  if (jaVoice) u.voice = jaVoice;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
+
+/* 渲染五十音 */
+function buildKanaSections() {
+  const container = document.getElementById("kanaSections");
+  container.innerHTML = "";
+
+  kanaSectionsData.forEach(sec => {
+    const h4 = document.createElement("h4");
+    h4.textContent = sec.title;
+
+    const grid = document.createElement("div");
+    grid.className = "kana-grid";
+
+    sec.items.forEach(k => {
+      const cell = document.createElement("div");
+      cell.className = "kana-cell";
+
+      cell.innerHTML = `
+        <div class="kana-main">${k.hira} / ${k.kata}</div>
+        <div class="kana-sub">${k.romaji}</div>
+      `;
+
+      cell.onclick = () => speakKana(k.hira);
+      grid.appendChild(cell);
+    });
+
+    container.appendChild(h4);
+    container.appendChild(grid);
+  });
+}
+
+buildKanaSections();
+
+// ===== h4 分组折叠：phrases / words 通用 =====
+function setupCollapsibleSections(pageId) {
+  const page = document.getElementById(pageId);
+  if (!page) return;
+
+  const headings = page.querySelectorAll('h4');
+
+  headings.forEach(h4 => {
+    h4.addEventListener('click', () => {
+      const collapsed = h4.classList.toggle('collapsed');
+      let el = h4.nextElementSibling;
+
+      // 折叠/展开：从当前 h4 往下，直到遇到下一个 h4
+      while (el && el.tagName !== 'H4') {
+        if (collapsed) {
+          // 记住原本的 display（一般是空字符串）
+          el.dataset.prevDisplay = el.style.display || '';
+          el.style.display = 'none';
+        } else {
+          el.style.display = el.dataset.prevDisplay || '';
+        }
+        el = el.nextElementSibling;
+      }
+    });
+
+    // 👉 初始就折叠一次（如果你想默认展开，可以把下面这段删掉）
+    h4.classList.add('collapsed');
+    let el2 = h4.nextElementSibling;
+    while (el2 && el2.tagName !== 'H4') {
+      el2.dataset.prevDisplay = el2.style.display || '';
+      el2.style.display = 'none';
+      el2 = el2.nextElementSibling;
+    }
+  });
+}
+
+
+buildKanaSections();
+
+/* 测验模式 */
+let quizList = [];
+kanaSectionsData.forEach(sec => sec.items.forEach(k => quizList.push(k)));
+
+let currentQuiz = null;
+
+function nextQuiz() {
+  const q = quizList[Math.floor(Math.random() * quizList.length)];
+  currentQuiz = q;
+  document.getElementById("quizKana").textContent = q.hira;
+  document.getElementById("quizAnswer").textContent = "";
+}
+
+function showQuizAnswer() {
+  if (currentQuiz)
+    document.getElementById("quizAnswer").textContent =
+      `${currentQuiz.romaji} ／ ${currentQuiz.hira} ／ ${currentQuiz.kata}`;
+}
+
+nextQuiz();
+
+/* ✅ 让 礼貌用语 + 常用单词 里的 h4 变成折叠标题 */
+setupCollapsibleSections('phrases');
+setupCollapsibleSections('words');
+
+</script>
 </body>
 </html>
